@@ -11,20 +11,22 @@
 
 ## Camadas
 
+Tudo numa pasta só (facilita subir pelo site do GitHub):
+
 ```
-src/
-├── core/        regras puras, sem tela (testadas com node --test)
-│   ├── timer.js   máquina de estados do cronômetro (foco, intervalo, pausa)
-│   ├── day.js     plano do dia, tags, regra do relatório, relatório diário
-│   └── stats.js   datas locais, semana seg–dom, dashboard semanal
-├── platform/    tudo que depende do aparelho
-│   ├── sound.js   bip agendado com Web Audio
-│   └── focus.js   tela cheia, tela acesa (Wake Lock), Não Perturbe, orientação
-├── storage.js   salva tudo no localStorage do aparelho
-└── app.js       telas e eventos (único arquivo que mexe no HTML)
+Regras puras, sem tela (testadas em core.test.js)
+  timer.js     máquina de estados do cronômetro (foco, intervalo, pausa)
+  day.js       plano do dia, tags, regra do relatório, relatório diário
+  stats.js     datas locais, semana seg–dom, dashboard semanal
+Dependem do aparelho
+  sound.js     bip agendado com Web Audio
+  focus.js     tela cheia, tela acesa (Wake Lock), Não Perturbe, orientação
+  storage.js   salva tudo no localStorage do aparelho
+Tela
+  app.js       telas e eventos (único arquivo que mexe no HTML)
 ```
 
-A regra é: **`core/` nunca importa nada de tela**. Assim as regras de negócio podem ser testadas e reaproveitadas num app nativo.
+A regra é: **`timer.js`, `day.js` e `stats.js` nunca importam nada de tela**. Assim as regras de negócio podem ser testadas e reaproveitadas num app nativo.
 
 ## Como cada requisito foi resolvido
 
@@ -50,7 +52,7 @@ Limite da plataforma: **nenhum site ou PWA pode silenciar notificações do sist
 - Cada sessão gravada tem `{ tag, seconds, completed, endedAt }`. O tempo vai direto para a tag.
 
 ### 5. Relatório só no fim do dia
-Função `canShowDailyReport(day, fase, hoje)` em `src/core/day.js`:
+Função `canShowDailyReport(day, fase, hoje)` em `day.js`:
 - **falso** durante qualquer bloco ou intervalo;
 - **verdadeiro** só quando o dia está encerrado: o último bloco planejado terminou, o usuário tocou em "Encerrar o dia agora", ou o dia já passou.
 

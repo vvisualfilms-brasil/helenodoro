@@ -1,10 +1,10 @@
 // Controlador da interface do Helenodoro.
-import * as T from './core/timer.js';
-import * as D from './core/day.js';
-import { dateKey, addDays, buildWeek, formatDuration, parseKey } from './core/stats.js';
+import * as T from './timer.js';
+import * as D from './day.js';
+import { dateKey, addDays, buildWeek, formatDuration, parseKey } from './stats.js';
 import { load, save } from './storage.js';
-import * as sound from './platform/sound.js';
-import * as focus from './platform/focus.js';
+import * as sound from './sound.js';
+import * as focus from './focus.js';
 
 const $app = document.getElementById('app');
 const { Phase } = T;
@@ -268,7 +268,7 @@ function breakStage(day, t) {
 function doneStage() {
   return `
     <section class="stage">
-      <img class="hero-tomato" src="icons/tomato.svg" alt="">
+      <img class="hero-tomato" src="tomato.svg" alt="">
       <h1>Dia encerrado</h1>
       <p class="muted">Seu relatório de hoje está pronto.</p>
       <button class="btn primary big" data-action="go" data-view="hoje">Ver relatório do dia</button>
@@ -482,7 +482,7 @@ function render() {
 
   $app.innerHTML = `
     <header class="chrome topbar">
-      <img src="icons/tomato.svg" alt="" width="26" height="26"><span>Helenodoro</span>
+      <img src="tomato.svg" alt="" width="26" height="26"><span>Helenodoro</span>
     </header>
     <main class="view view-${view}">${body}</main>
     <nav class="chrome tabbar" aria-label="Seções">

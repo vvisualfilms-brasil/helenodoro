@@ -25,26 +25,18 @@ helenodoro/
 ├── styles.css
 ├── manifest.webmanifest      (PWA: nome, ícone, cores)
 ├── sw.js                     (funciona offline)
-├── .nojekyll                 (GitHub Pages publica os arquivos como estão)
-├── icons/                    (tomate em SVG e PNG)
-├── src/
-│   ├── app.js                (telas e eventos)
-│   ├── storage.js            (salvar no aparelho)
-│   ├── core/                 (regras de negócio puras)
-│   │   ├── timer.js
-│   │   ├── day.js
-│   │   └── stats.js
-│   └── platform/             (som, tela cheia, Não Perturbe)
-│       ├── sound.js
-│       └── focus.js
-├── tests/core.test.js        (testes das regras)
-├── docs/
-│   ├── ARQUITETURA.md        (decisões e como cada requisito foi feito)
-│   └── NATIVO.md             (Android com Não Perturbe automático)
+├── tomato.svg, icon-*.png, apple-touch-icon.png   (ícone de tomate)
+├── app.js                    (telas e eventos)
+├── storage.js                (salvar no aparelho)
+├── timer.js, day.js, stats.js   (regras de negócio puras, sem tela)
+├── sound.js, focus.js        (som, tela cheia, Não Perturbe)
+├── core.test.js              (testes das regras)
+├── ARQUITETURA.md            (decisões e como cada requisito foi feito)
+├── NATIVO.md                 (Android com Não Perturbe automático)
 └── package.json
 ```
 
-O app fica na raiz de propósito: assim o GitHub Pages publica direto da branch `main`, sem nenhuma configuração extra.
+Tudo numa pasta só, de propósito: dá para subir pelo site do GitHub de qualquer jeito (arrastando ou escolhendo os arquivos) e o GitHub Pages publica direto da branch `main`.
 
 ## Rodar no computador
 
@@ -111,7 +103,7 @@ https://SEU-USUARIO.github.io/helenodoro/
 
 ## Limites conhecidos
 
-- **Notificações:** sites/PWAs não podem silenciar o sistema. Ver [docs/NATIVO.md](docs/NATIVO.md) para o Android nativo.
+- **Notificações:** sites/PWAs não podem silenciar o sistema. Ver [NATIVO.md](NATIVO.md) para o Android nativo.
 - **iPhone com tela bloqueada:** o iOS pausa o áudio de apps web. Mantenha a tela acesa (o app já pede isso) ou o bip toca ao desbloquear.
 - **Tela cheia no iPhone:** o Safari não deixa sites entrarem em tela cheia; instalado na tela inicial, o app já abre sem barras.
 - Os dados ficam só no aparelho/navegador onde você usa. Use "Exportar dados" em Ajustes como backup.

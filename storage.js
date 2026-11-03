@@ -1,5 +1,5 @@
 // Persistência local (localStorage). Tudo fica no aparelho; nada vai para servidor.
-import { idle } from './core/timer.js';
+import { idle } from './timer.js';
 
 const KEY = 'helenodoro:v1';
 

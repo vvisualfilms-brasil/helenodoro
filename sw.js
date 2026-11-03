@@ -1,23 +1,23 @@
 // Service worker: deixa o app abrir sem internet.
 // Estratégia "rede primeiro": sempre tenta a versão nova; sem rede, usa o cache.
 // Ao publicar mudanças grandes, aumente o número da versão.
-const CACHE = 'helenodoro-v1';
+const CACHE = 'helenodoro-v2';
 const SHELL = [
   './',
   './index.html',
   './styles.css',
   './manifest.webmanifest',
-  './src/app.js',
-  './src/storage.js',
-  './src/core/timer.js',
-  './src/core/day.js',
-  './src/core/stats.js',
-  './src/platform/sound.js',
-  './src/platform/focus.js',
-  './icons/tomato.svg',
-  './icons/icon-192.png',
-  './icons/icon-512.png',
-  './icons/apple-touch-icon.png',
+  './app.js',
+  './storage.js',
+  './timer.js',
+  './day.js',
+  './stats.js',
+  './sound.js',
+  './focus.js',
+  './tomato.svg',
+  './icon-192.png',
+  './icon-512.png',
+  './apple-touch-icon.png',
 ];
 
 self.addEventListener('install', (e) => {

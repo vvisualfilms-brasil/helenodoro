@@ -1,8 +1,8 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import * as T from '../src/core/timer.js';
-import * as D from '../src/core/day.js';
-import { buildWeek, weekKeys, formatDuration } from '../src/core/stats.js';
+import * as T from './timer.js';
+import * as D from './day.js';
+import { buildWeek, weekKeys, formatDuration } from './stats.js';
 
 const plan = { blocks: 3, focusMin: 50, breakMin: 10 };
 const MIN = 60_000;
