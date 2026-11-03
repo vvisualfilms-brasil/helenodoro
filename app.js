@@ -107,7 +107,18 @@ function completePhase(silent = false) {
   const t = store.active.timer;
   const day = store.days[store.active.date];
   const endedAt = t.endAt ?? Date.now();
-  if (!silent) navigator.vibrate?.([300, 120, 300, 120, 300]);
+  if (!silent) {
+    navigator.vibrate?.([300, 120, 300, 120, 300]);
+    // Garantia do bip: se o som agendado não tocou (celular suspendeu o áudio, página
+    // recarregada etc.), toca agora.
+    if (!(alarm?.played?.() ?? false)) {
+      let kind = t.phase === Phase.BREAK ? 'break' : 'focus';
+      if (t.phase === Phase.FOCUS && day && D.isLastBlock(day)) kind = 'final';
+      alarm?.cancel();
+      sound.beepNow(kind, store.settings.volume);
+    }
+  }
+  alarm = null;
 
   if (t.phase === Phase.FOCUS && day) {
     const updated = D.recordFocus(day, {
@@ -522,6 +533,10 @@ $app.addEventListener('click', (e) => {
     chip.parentElement.querySelectorAll('.chip').forEach((c) => c.classList.toggle('is-on', c === chip));
     return;
   }
+  // Celular deitado: só o cronômetro aparece, então tocar na tela pausa/continua.
+  if (document.body.classList.contains('timing') && focus.isLandscape() && e.target.closest('.stage')) {
+    return togglePause();
+  }
   const el = e.target.closest('[data-action]');
   if (!el) return;
   const a = el.dataset.action;
@@ -555,7 +570,10 @@ $app.addEventListener('input', (e) => {
 });
 
 // Navegadores só liberam áudio depois de um toque.
-window.addEventListener('pointerdown', () => sound.unlock(), { once: true });
+window.addEventListener('pointerdown', () => sound.unlock());
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'visible') { sound.unlock(); tick(); }
+});
 
 document.addEventListener('keydown', (e) => {
   if (e.target.matches('input, textarea')) return;

@@ -1,7 +1,7 @@
 // Service worker: deixa o app abrir sem internet.
 // Estratégia "rede primeiro": sempre tenta a versão nova; sem rede, usa o cache.
 // Ao publicar mudanças grandes, aumente o número da versão.
-const CACHE = 'helenodoro-v2';
+const CACHE = 'helenodoro-v3';
 const SHELL = [
   './',
   './index.html',

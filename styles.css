@@ -142,7 +142,7 @@ body.immersive .view { max-width: none; padding: 0; display: flex; }
 .immersive-stage .clock.giant { font-size: clamp(80px, 26vw, 220px); margin: 0; }
 .immersive-stage .controls {
   position: fixed; left: 0; right: 0; bottom: calc(24px + var(--safe-b));
-  opacity: 0; pointer-events: none; transition: opacity .25s;
+  opacity: .45; transition: opacity .25s;
 }
 .immersive-stage .controls .btn { background: #1d1d1d; border-color: #333; color: #fff; }
 .immersive-stage .controls .muted { color: #8d8d8d; }
@@ -161,6 +161,12 @@ body.paused .clock.giant { opacity: .55; }
   }
   body.timing .stage .clock { font-size: min(30vw, 72dvh); margin: 0; color: #fff; }
   body.timing.paused .stage .clock { opacity: .55; }
+  body.timing .stage { position: relative; cursor: pointer; }
+  body.timing .stage::after {
+    content: 'toque para pausar'; position: absolute; bottom: 14px; left: 0; right: 0;
+    text-align: center; font-size: 13px; color: #fff; opacity: .3;
+  }
+  body.timing.paused .stage::after { content: '❚❚ pausado · toque para continuar'; opacity: .7; }
 }
 
 /* ---------- Relatório ---------- */

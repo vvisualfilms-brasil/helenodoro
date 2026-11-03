@@ -15,8 +15,10 @@ function getCtx() {
 
 // Precisa ser chamado dentro de um toque/clique (regra dos navegadores).
 export function unlock() {
+  // iPhone (iOS 16.4+): som de "mídia", toca mesmo com a chave de silencioso ligada.
+  try { if (navigator.audioSession) navigator.audioSession.type = 'playback'; } catch { /* sem suporte */ }
   const c = getCtx();
-  if (c && c.state === 'suspended') c.resume();
+  if (c && c.state !== 'running') c.resume?.().catch(() => {});
 }
 
 const PATTERNS = {
@@ -44,11 +46,15 @@ function tone(c, at, freq, volume, nodes) {
 
 export function scheduleAlarm(secondsFromNow, { kind = 'focus', volume = 0.8 } = {}) {
   const c = getCtx();
-  if (!c || volume <= 0) return { cancel() {} };
+  if (!c || volume <= 0) return { played: () => true, cancel() {} };
   const t0 = c.currentTime + Math.max(0, secondsFromNow);
   const nodes = [];
   for (const [freq, offset] of PATTERNS[kind] ?? PATTERNS.focus) tone(c, t0 + offset, freq, volume, nodes);
   return {
+    // true se o relógio de áudio já chegou (ou está chegando) na hora do bip.
+    played() {
+      return c.state === 'running' && c.currentTime >= t0 - 0.3;
+    },
     cancel() {
       for (const n of nodes) {
         try { n.stop(); } catch { /* já parou */ }
